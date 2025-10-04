@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agreement Tracker - Manage Your Agreements</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <svg class="title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Agreement Tracker
+                </h1>
+                <p class="subtitle">Manage your agreements efficiently</p>
+            </div>
+        </header>
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="baseTokenNo">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Base Token No.
+                </label>
+                <input type="number" id="baseTokenNo" placeholder="Enter base token number" min="1">
+            </div>
+            
+            <div class="action-buttons">
+                <button id="exportBtn" class="btn btn-secondary">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export Data
+                </button>
+                <button id="importBtn" class="btn btn-secondary">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Import Data
+                </button>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Add Agreement Form -->
+        <div class="form-card">
+            <h2 class="form-title">Add New Agreement</h2>
+            <form id="agreementForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" placeholder="Enter address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tokenNo">Token No.</label>
+                        <input type="text" id="tokenNo" placeholder="Auto-generated" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="flatNo">Flat No.</label>
+                        <input type="text" id="flatNo" placeholder="Enter flat number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="Enter location" required>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="paidCustomer">
+                        <span class="checkbox-custom"></span>
+                        Paid (Customer)
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="paidSelf">
+                        <span class="checkbox-custom"></span>
+                        Paid (Self)
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Agreement
+                </button>
+            </form>
+        </div>
+
+        <!-- Agreements Table -->
+        <div class="table-card">
+            <h2 class="table-title">All Agreements</h2>
+            <div class="table-wrapper">
+                <table id="agreementsTable">
+                    <thead>
+                        <tr>
+                            <th>Token No.</th>
+                            <th>Address</th>
+                            <th>Flat No.</th>
+                            <th>Location</th>
+                            <th>Paid (Customer)</th>
+                            <th>Paid (Self)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="agreementsBody">
+                        <tr class="empty-state">
+                            <td colspan="7">
+                                <div class="empty-state-content">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                    <p>No agreements found. Add your first agreement to get started!</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
